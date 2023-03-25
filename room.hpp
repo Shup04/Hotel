@@ -8,7 +8,7 @@ class room{
         
         int roomNumber, roomCapacity, numberOfBeds;
         string roomType, bedType; //standard, deluxe, executive, penthouse rooms
-        bool occupied;
+        bool occupied, isDirty, amenitiesStocked;
 
         //map each room type to capacities, bettypes ecte
         const std::map<string, std::tuple<int, int, string>> roomPropertes = {
@@ -32,34 +32,49 @@ class room{
             roomNumber = 0;
             roomType = "Standard Room";
             occupied = false;
+            isDirty = false;
+            amenitiesStocked = false;
         }
+        //set and get
+        void setRoomNumber(int &roomNumber) {this->roomNumber = roomNumber;}
+        void setRoomType(string &roomType) {this->roomType = roomType;}
+        void setOccupied(bool &occupied) {this->occupied = occupied;}
+        void setIsDirty(bool &isDirty) {this->isDirty = isDirty;}
+        
+        int getRoomNumber() {return roomNumber;}
+        string getRoomType() {return roomType;}
+        bool getOccupied() {return occupied;}
+        bool getIsDirty() {return isDirty;}
+        bool getAmenitiesStocked() {return amenitiesStocked;}
 
-        void setRoomNumber(int &roomNumber){
-            this->roomNumber = roomNumber;
+        //other functions
+        int getRoomCapacity()const{ 
+            return std::get<0>(roomPropertes.at(roomType));
         }
-        void setRoomType(string &roomType){
-            this->roomType = roomType;
-        }
-        void setOccupied(bool &occupied){
-            this->occupied = occupied;
-        }
-        int getRoomNumber(){
-            return roomNumber;
-        }
-        string getRoomType(){
-            return roomType;
-        }
-        bool getOccupied(){
-            return occupied;
-        }
-
-        int getRoomCapacity()const{ //number of people that can comfortable fit in each room
-            return std::get<0>(roomPropertes.at(roomType));// reads room data map
-        }
-        int getNumberofBeds()const{ //number of beds in unit
+        int getNumberofBeds()const{ 
             return std::get<1>(roomPropertes.at(roomType));
         }
-        string getBedType()const{ // type of beds in unit
+        string getBedType()const{ 
             return std::get<2>(roomPropertes.at(roomType));
+        }
+        void resetRoom(){
+            occupied = isDirty = false;
+        }
+        void roomStatus(){
+            cout << "!!-----------------------------!!\n";
+            cout << "  Room #" << roomNumber << " information:\n\n";
+            cout << "  Room Type: " << roomType << endl;
+            cout << "  Beds: " << getNumberofBeds() << endl;
+            cout << "  Bed Size: " << getBedType() << "\n\n";
+            cout << "  Status: \n\n";
+            cout << "  Availability: ";
+            if(occupied == true) cout << "Occupied\n";
+            else cout << "Available\n";
+            cout << "  Dirty: " << std::boolalpha << isDirty << endl;
+            cout << "  Amenities: ";
+            if(amenitiesStocked == true) cout << "Stocked\n";
+            else cout << "Not Stocked\n";
+            cout << "!!-----------------------------!!\n";
+
         }
 };

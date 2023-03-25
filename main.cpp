@@ -3,11 +3,12 @@
 #include<vector>
 using namespace std;
 
+void checkRoomStatus(){
 
+}
 
 int main(){
     
-    vector<vector<room>> floors;//vect of vectors for each room on each floor
     const int numOfFloors = 4;
     const int roomsPerFloor = 100;
 
@@ -20,12 +21,12 @@ int main(){
         for(int j=0; j<roomsPerFloor; j++){
             int roomNum = i+1;
             //add rooms to floor
-            rooms.push_back(room(roomNum, "Standard Rom", false));
+            rooms.push_back(room(roomNum, "Standard Room", false));
         }
         //add floors to floor vector.
         floors.push_back(rooms);
     }
 
-    
+    floors.at(2).at(20).roomStatus();
     
 }

@@ -7,7 +7,7 @@ using namespace std;
 int checkAvailable(int numOfBooking, int roomNum, vector<room> rooms){
     for (int i = 1; i <= numOfBooking; i++){
 
-        if (rooms.at(roomNum+1)){
+        if (rooms.at(roomNum+1).){
             numOfBooking -= 1;
             return(roomNumber);
         }

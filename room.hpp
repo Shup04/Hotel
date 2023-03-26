@@ -3,13 +3,19 @@ using namespace std;
 #include<map>
 #include<tuple>
 
+#include"user.hpp"
+
 class room{
     private:
         
         int roomNumber, roomCapacity, numberOfBeds;
         string roomType, bedType; //standard, deluxe, executive, penthouse rooms
         bool occupied, isDirty, amenitiesStocked;
+        string checkInDate, checkOutDate, status;
 
+        User roomOwner;
+
+        
         //map each room type to capacities, bettypes ecte
         const std::map<string, std::tuple<int, int, string>> roomPropertes = {
 
@@ -19,14 +25,21 @@ class room{
             {"Executive Suite", {8, 4, "queen"}},
             {"Penthouse", {14, 8, "king"}}
         };
-
     
     public:
         //constructos
-        room(int roomNumber, string roomType, bool occupied){
+        room(int roomNumber, string roomType, bool occupied, bool isDirty, bool amenitiesStocked){
             this->roomNumber = roomNumber;
             this->roomType = roomType;
             this->occupied = occupied;
+            this->isDirty = isDirty;
+            this->amenitiesStocked = amenitiesStocked;
+
+            this->checkInDate = checkInDate;
+            this->checkOutDate = checkOutDate;
+
+            //this->roomOwner = roomOwner;
+            
         }
         room(){
             roomNumber = 0;
@@ -35,17 +48,23 @@ class room{
             isDirty = false;
             amenitiesStocked = false;
         }
-        //set and get
+
         void setRoomNumber(int &roomNumber) {this->roomNumber = roomNumber;}
         void setRoomType(string &roomType) {this->roomType = roomType;}
         void setOccupied(bool &occupied) {this->occupied = occupied;}
         void setIsDirty(bool &isDirty) {this->isDirty = isDirty;}
+        void setRoomOwner(User roomOwner) {this->roomOwner = roomOwner;}
         
-        int getRoomNumber() {return roomNumber;}
-        string getRoomType() {return roomType;}
-        bool getOccupied() {return occupied;}
-        bool getIsDirty() {return isDirty;}
-        bool getAmenitiesStocked() {return amenitiesStocked;}
+        int getRoomNumber() const {return roomNumber;}
+        string getRoomType() const {return roomType;}
+        bool getOccupied() const {return occupied;}
+        bool getIsDirty() const {return isDirty;}
+        bool getAmenitiesStocked() const {return amenitiesStocked;}
+        User getRoomOwner() const {return roomOwner;}
+
+        string getCheckInDate() const { return checkInDate; }
+        string getCheckOutDate() const { return checkOutDate; }
+     
 
         //other functions
         int getRoomCapacity()const{ 
@@ -61,12 +80,15 @@ class room{
             occupied = isDirty = false;
         }
         void roomStatus(){
+            
             cout << "!!-----------------------------!!\n";
             cout << "  Room #" << roomNumber << " information:\n\n";
             cout << "  Room Type: " << roomType << endl;
             cout << "  Beds: " << getNumberofBeds() << endl;
             cout << "  Bed Size: " << getBedType() << "\n\n";
-            cout << "  Status: \n\n";
+            cout << "  Status: ";
+            if((isDirty == true) or (occupied == true) or (amenitiesStocked == false)) cout << "Not Ready\n\n";
+            else cout << "Ready\n\n";
             cout << "  Availability: ";
             if(occupied == true) cout << "Occupied\n";
             else cout << "Available\n";

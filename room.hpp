@@ -52,7 +52,7 @@ class room{
         void setRoomNumber(int &roomNumber) {this->roomNumber = roomNumber;}
         void setRoomType(string &roomType) {this->roomType = roomType;}
         void setOccupied(bool &occupied) {this->occupied = occupied;}
-        void setIsDirty(bool &isDirty) {this->isDirty = isDirty;}
+        void setIsDirty(bool isDirty) {this->isDirty = isDirty;}
         void setRoomOwner(User roomOwner) {this->roomOwner = roomOwner;}
         
         int getRoomNumber() const {return roomNumber;}
@@ -66,7 +66,7 @@ class room{
         string getCheckOutDate() const { return checkOutDate; }
         string getStatus() const {
             if((occupied == true) or (isDirty == true) or (amenitiesStocked == false)) return "Not Ready";
-            else return "ready";
+            else return "Ready";
         }
      
 

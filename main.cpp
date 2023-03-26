@@ -3,28 +3,51 @@
 #include<vector>
 using namespace std;
 
+void book(vector<room> rooms, User guest){
+    int roomNum, numOfBooking;
 
-void book(int numOfBooking, int roomNum, vector<room> &rooms, User guest){
+    cout << "!!------------Book Room----------------!!\n";
+    cout << "Enter number of rooms: ";
+    cin >> numOfBooking;
 
-    bool booked = false;
-    int i=0, j=0;
-    while(!booked){
-        int roomsBooked[numOfBooking];
-        if (rooms.at(roomNum+i).getStatus() == "Ready"){
-            rooms.at(roomNum+i).setRoomOwner(guest);
-            roomsBooked[j] = rooms.at(roomNum+i).getRoomNumber();
-            j++;
+    cout << "Enter room number: ";
+    cin >> roomNum;
+
+    /*
+    if room is ready, add user to room object and to vector of booked rooms, increment.
+    if room is not ready, increment.
+    if number of rooms booked equal to desired, break.
+    */
+    vector<int> roomsBooked;
+
+    while(roomsBooked.size() != numOfBooking){
+        room room = rooms.at(roomNum-1);
+        if(room.getStatus() == "Ready"){
+            cout << roomsBooked.size() << endl;
+            room.setRoomOwner(guest);
+            roomsBooked.push_back(room.getRoomNumber());
+            roomNum++;
         }
-
-        if(j == numOfBooking){
-            cout << "Rooms Booked:\n";
-            for(int k=0; k<numOfBooking; k++){
-                cout << "#" << roomsBooked[k] << endl;
-            }
-        }
-        i++;
     }
+
+
+
+
+
+    //print booked rooms
+    /*
+    if (booked) {
+        cout << "Rooms booked successfully!\n";
+        cout << "Booked rooms:\n";
+        for(int i=0;i<numOfBooking;i++){
+            cout << "#" << bookedRooms.at(i) << endl;
+        }
+    } else {
+        cout << "Sorry, the room(s) are not available.\n";
+    }
+    */
 }
+
 
 
 
@@ -49,16 +72,8 @@ void displayMenu(vector<room> rooms, User guest){
             switch (output)
             {
             case 1:
-                int roomNum, numOfBooking;
-
-                cout << "!!------------Book Room----------------!!\n";
-                cout << "Enter number of rooms: ";
-                cin >> numOfBooking;
-
-                cout << "Enter room number: ";
-                cin >> roomNum;
-
-                book(numOfBooking, roomNum, rooms, guest);
+                
+                book(rooms, guest);
 
                 break;
 
@@ -94,6 +109,8 @@ int main(){
 
     //floors.at(2).at(20).roomStatus();
     User guest1("Bradley", "BradleySchmidt04@gmail.com", "778-586-8196");
+
+    rooms.at(5).setIsDirty(true);
 
     displayMenu(rooms, guest1);
     

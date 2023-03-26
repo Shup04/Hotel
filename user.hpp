@@ -1,10 +1,8 @@
 #include<string>
 using namespace std;
 
-class User {
-
+class User{
 public:
-
     User(string name, string email, string phone) : name_(name), email_(email), phone_(phone) {}
     User(){
         name_=" ";

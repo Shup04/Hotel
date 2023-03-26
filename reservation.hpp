@@ -1,4 +1,4 @@
-#include<iostream>
+/*#include<iostream>
 #include<string>
 #include<map>
 #include<vector>
@@ -187,7 +187,7 @@ public:
         }
 
     }
-*/
+
     int book(int numR,int numRooms_){
         for (int i = 1; i <= numRooms_; i++){
             cin >> numR;
@@ -212,3 +212,4 @@ public:
         }
     }
 };
+*/

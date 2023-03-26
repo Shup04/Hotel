@@ -4,31 +4,32 @@
 using namespace std;
 
 
-int checkAvailable(int numOfBooking, int roomNum, vector<room> rooms){
-    for (int i = 1; i <= numOfBooking; i++){
+void book(int numOfBooking, int roomNum, vector<room> &rooms, User guest){
 
-        if (rooms.at(roomNum+1).){
-            numOfBooking -= 1;
-            return(roomNumber);
+    bool booked = false;
+    int i=0, j=0;
+    while(!booked){
+        int roomsBooked[numOfBooking];
+        if (rooms.at(roomNum+i).getStatus() == "Ready"){
+            rooms.at(roomNum+i).setRoomOwner(guest);
+            roomsBooked[j] = rooms.at(roomNum+i).getRoomNumber();
+            j++;
         }
+
+        if(j == numOfBooking){
+            cout << "Rooms Booked:\n";
+            for(int k=0; k<numOfBooking; k++){
+                cout << "#" << roomsBooked[k] << endl;
+            }
+        }
+        i++;
     }
 }
 
 
-void bookRoom(int numOfBooking, int roomNum, vector<room> rooms){
-    room room = rooms.at(roomNum+1);
-
-    if (checkAvailable(numOfBooking, room.getRoomNumber()) == true){
-        book(numR, room.getRoomNumber());
-
-        cout << " Your room is successfully book " << endl;
-        cout << "from " << room.getCheckInDate() << "to " << room.getCheckOutDate() << endl;
-    }
-}
 
 
-
-void displayMenu(vector<room> rooms){
+void displayMenu(vector<room> rooms, User guest){
     cout << "!!----------Hotel Managment------------!!\n";
     cout << "|          1. Book a room               |\n";           
     cout << "|          2. Check in/out              |\n";    
@@ -38,6 +39,7 @@ void displayMenu(vector<room> rooms){
     cout << "|          6. Table reservation         |\n";
     cout << "|          7. View current booking      |\n";
     cout << "!!-------------------------------------!!\n";
+
     while(true)
     {
         int output;
@@ -56,7 +58,7 @@ void displayMenu(vector<room> rooms){
                 cout << "Enter room number: ";
                 cin >> roomNum;
 
-                bookRoom(numOfBooking, roomNum, rooms);
+                book(numOfBooking, roomNum, rooms, guest);
 
                 break;
 
@@ -91,7 +93,8 @@ int main(){
     }
 
     //floors.at(2).at(20).roomStatus();
+    User guest1("Bradley", "BradleySchmidt04@gmail.com", "778-586-8196");
 
-    displayMenu(rooms);
+    displayMenu(rooms, guest1);
     
 }

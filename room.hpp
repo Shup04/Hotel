@@ -64,6 +64,10 @@ class room{
 
         string getCheckInDate() const { return checkInDate; }
         string getCheckOutDate() const { return checkOutDate; }
+        string getStatus() const {
+            if((occupied == true) or (isDirty == true) or (amenitiesStocked == false)) return "Not Ready";
+            else return "ready";
+        }
      
 
         //other functions

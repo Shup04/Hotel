@@ -49,9 +49,9 @@ class room{
             amenitiesStocked = false;
         }
 
-        void setRoomNumber(int &roomNumber) {this->roomNumber = roomNumber;}
-        void setRoomType(string &roomType) {this->roomType = roomType;}
-        void setOccupied(bool &occupied) {this->occupied = occupied;}
+        void setRoomNumber(int roomNumber) {this->roomNumber = roomNumber;}
+        void setRoomType(string roomType) {this->roomType = roomType;}
+        void setOccupied(bool occupied) {this->occupied = occupied;}
         void setIsDirty(bool isDirty) {this->isDirty = isDirty;}
         void setRoomOwner(User roomOwner) {this->roomOwner = roomOwner;}
         

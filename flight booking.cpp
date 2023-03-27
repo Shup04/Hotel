@@ -1,7 +1,7 @@
 #include <iostream>
 #include <vector>
 #include<string>
-#include <ctime>;
+#include <ctime>
 using namespace std;
 
 int vancoverseat(int ticket){
@@ -15,39 +15,11 @@ int kelowna(int ticket){
 	return random_ticket_number;
 }
 
-void bookFlight(string destination, string pickup, string date){
-	cout << " How may ticket do you want to purchase " << endl;
-	if (destination == "Vancouver" or " Kelowna "){
-		int ticket;
-		cin >> ticket;
 
-		if (ticket < 0) {cout << "Invalid " << endl;}
-		else if(ticket >72 ) {cout << " you cannot book that amount " << endl;}
-
-		else{
-			if (destination == "Vancouver"){
-				for (int i = 0; i < ticket; i++) {
-					int random_ticket = vancoverseat(ticket);
-					cout << "Ticket #" << i + 1 << ": " << random_ticket << endl;
-				}
-			}
-			else{
-				for (int i = 0; i < ticket; i++) {
-					int random_ticket = kelowna(ticket);
-					cout << "Ticket #" << i + 1 << ": " << random_ticket << endl;
-				}
-			}
-		}
-	}
-	else{
-		cout << " is just kelowna and vancouver we offer here " << endl;
-	}
-	
-}
 
 
 void input(){
-	
+
 	cout << "enter the destination " << endl;
 	string destination;
 	cin>> destination;

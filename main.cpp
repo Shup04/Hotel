@@ -3,6 +3,7 @@
 #include<vector>
 using namespace std;
 
+//book rooms
 void book(vector<room> &rooms, User &guest){
     int numOfBooking;
 
@@ -25,7 +26,34 @@ void book(vector<room> &rooms, User &guest){
             cout << "Room #" << roomNum << " not ready, please enter another room.\n";
         }
     }
-    rooms;
+}
+
+void avaialbleRooms(vector<room> &rooms){
+    vector<room> availableRooms;
+    
+    //add rooms with ready status to new vector
+    for(int i=0; i<rooms.size(); i++){
+        if(rooms[i].getStatus() == "Ready"){
+            availableRooms.push_back(rooms[i]);
+        }
+    }
+
+    cout << "!!----------Available Rooms------------!!\n ";
+    const int numRows = 20;
+    const int numCols = 20;
+
+    for (int row = 0; row < numRows; row++) {
+        int startIndex = row * numCols; // calculate the index of the first element in the current row
+
+        // ite erate through each column of the grid
+        for (int col = 0; col < numCols; col++) {
+            int index = startIndex + col; // calculate the index of the current element
+
+            // print the current element of the vector
+            cout << availableRooms[index].getRoomNumber() << " ";
+        }
+        cout << endl << " ";
+    }
 }
 
 int vancover(int ticket){
@@ -74,7 +102,6 @@ void bookFlight(){
 	else{
 		cout << " is just kelowna and vancouver we offer here " << endl;
 	}
-	
 }
 
 
@@ -103,6 +130,9 @@ void displayMenu(vector<room> &rooms, User &guest){
     case 2:
         cout << " check in/out " << endl;
         break;
+
+    case 3:
+        avaialbleRooms(rooms);
 
     case 7:
         bookFlight();

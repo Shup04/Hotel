@@ -60,6 +60,57 @@ void avaialbleRooms(vector<room> &rooms){
     cout << "!!-------------------------------------!!\n\n";
 }
 
+void printBill(User &guest){
+    cout << "Guest name: " << guest.getName() << endl;
+    cout <<"Room type: " << roomType << endl;
+    cout << "Room number: " << roomNumber << endl;
+    cout << "Amount: $" << amount << endl << endl;
+}
+void payment(){
+    printBill();
+    int opt;
+    string digits, expDate, cvv;
+    bool isValid = false;
+    
+    while (!isValid){
+        cout<< "\nChoose Payment Option: " << endl;
+        cout<< "DEBIT / CREDIT (1) - CHEQUE (2)" << endl; 
+        //redundant variable - both 1 and 2 result in same process
+        cin >> opt;
+        if (opt == 1)
+        {
+            cout << "Enter Digits: ";
+            cin >> digits;
+            cout << "Enter Expiration Date (MMYY): ";
+            cin >> expDate;
+            cout << "Enter CVV: ";
+            cin >> cvv;
+        
+            if (digits.length() == 16 && expDate.length() == 4 && cvv.length() == 3) 
+            {
+                    isValid = true;
+            cout << "\nPayment Confirmed.\n" << endl;
+            cout << "Thank You For Staying With Us, " << "! We hope to see you again soon." << endl; //Personal Message
+            }
+        
+            else 
+            {
+                    cout << "\nInvalid payment information. Please try again.\n";
+                }		
+        }
+        if (opt == 2){
+            isValid = true;
+            cout << "If you chose to make a payment with a cheque, please mail your cheque to the following address:" << endl;
+            cout << "\n123 Main Street\nCity\nProvince\nPostal\n" << endl;
+            cout << "Or deliver to our front desk from 8am - 8pm any day of the week. Payments are due 14 days after the reservation's check-in date. Daily interest will be charged for late payments. Cheques may take a few days to be processed in the mail." << endl;
+            cout << "If you have any questions or concerns regarding your payment, please don't hesitate to contact our front desk at (123) 456-7890." << endl;
+        }
+        else if (opt != 1 && opt != 2){
+            cout << "\nInvalid payment option. Please try again.\n";
+        }
+    }
+}
+
 // collect feedback and do nothing lmao
 void feedback(){ 
     string feedback;

@@ -1,0 +1,175 @@
+/*
+BILLING AND PAYMENT MANAGEMENT SYSTEM
+
+#ifndef BILL_H
+#define BILL_H
+
+#include <string>
+#include <map>
+using namespace std;
+
+class Bill
+{
+private:
+	string guestName;
+	string roomType;
+	int roomNumber;
+	double amount;
+		
+public:
+	Bill();
+	Bill(string &guestName, string &roomType, int &roomNumber, double &amount);
+
+  void setGuestName(string &guestName);
+  void setRoomType(string &roomType);
+  void setRoomNumber(int &roomNumber);
+  void setAmount(double &amount);
+       
+  string getGuestName();
+  string getRoomType();
+  int getRoomNumber();
+  double getAmount();
+  
+  void printBill();
+  void payment();
+};
+
+#endif
+
+TO IMPLEMENT
+*/
+
+#include <iostream>
+#include <string>
+#include <map>
+#include "Bill.h"
+using namespace std;
+
+Bill::Bill()
+{
+    guestName = "N/A";
+    roomType = "N/A";
+    roomNumber = 0;
+    amount = 0;
+}
+//roomType needs to include "N/A" within room class
+Bill::Bill(string guestName, string roomType, int roomNumber, double amount)
+{
+    this-> guestName = guestName;
+    this-> roomType = roomType;
+    this-> roomNumber = roomNumber;
+    this-> amount = amount;
+}
+
+void Bill::setGuestName(string guestName)
+{
+    this-> guestName = guestName;
+}
+    
+void Bill::setRoomType(string roomType)
+{
+    this->roomType = roomType;
+}
+        
+void Bill::setRoomNumber(int roomNumber)
+{
+    this->roomNumber = roomNumber;
+}
+    
+void Bill::setAmount(double amount)
+{
+    this-> amount = amount;
+}
+    
+string Bill::getGuestName()
+{
+    return guestName;
+}
+    
+string Bill::getRoomType()
+{
+    return roomType;
+}
+       
+int Bill::getRoomNumber()
+{
+    return roomNumber;
+}  
+    
+double Bill::getAmount()
+{
+    return amount;
+}
+
+void Bill::printBill()
+{
+    cout << "Guest name: " << guestName << endl;
+    cout <<"Room type: " << roomType << endl;
+    cout << "Room number: " << roomNumber << endl;
+    cout << "Amount: $" << amount << endl << endl;
+}
+
+void Bill::payment()
+{
+    printBill();
+    int opt;
+    string digits, expDate, cvv;
+    bool isValid = false;
+	
+    while (!isValid)
+    {
+	cout<< "\nChoose Payment Option: " << endl;
+	cout<< "DEBIT / CREDIT (1) - CHEQUE (2)" << endl; 
+	//redundant variable - both 1 and 2 result in same process
+	cin >> opt;
+	if (opt == 1)
+	{
+	    cout << "Enter Digits: ";
+	    cin >> digits;
+	    cout << "Enter Expiration Date (MMYY): ";
+	    cin >> expDate;
+	    cout << "Enter CVV: ";
+	    cin >> cvv;
+	
+	    if (digits.length() == 16 && expDate.length() == 4 && cvv.length() == 3) 
+	    {
+                isValid = true;
+		cout << "\nPayment Confirmed.\n" << endl;
+		cout << "Thank You For Staying With Us, " << "! We hope to see you again soon." << endl; //Personal Message
+	    }
+	
+	    else 
+	    {
+    	        cout << "\nInvalid payment information. Please try again.\n";
+            }		
+	}
+	if (opt == 2)
+	{
+	    isValid = true;
+	    cout << "If you chose to make a payment with a cheque, please mail your cheque to the following address:" << endl;
+	    cout << "\n123 Main Street\nCity\nProvince\nPostal\n" << endl;
+	    cout << "Or deliver to our front desk from 8am - 8pm any day of the week. Payments are due 14 days after the reservation's check-in date. Daily interest will be charged for late payments. Cheques may take a few days to be processed in the mail." << endl;
+	    cout << "If you have any questions or concerns regarding your payment, please don't hesitate to contact our front desk at (123) 456-7890." << endl;
+	}
+	else if (opt != 1 && opt != 2)
+	{
+	    cout << "\nInvalid payment option. Please try again.\n";
+	}
+    }
+}
+
+
+int main()
+{ 
+    //Dummy Code
+    vector<Bill> Bills;
+
+    // Create a Bill object and add it to the vector
+    Bill b1("Alice", "Single", 207, 300);
+    // Print the Bill
+    b1.printBill();
+    // Print Bill and Prompts Payment
+    b1.payment();
+
+    return 0;
+}

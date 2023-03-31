@@ -2,6 +2,8 @@
 #include"user.hpp"
 #include"room.hpp"
 #include"bill.hpp"
+#include"table.hpp"
+#include"food.hpp"
 #include<vector>
 #include<algorithm>
 using namespace std;
@@ -36,11 +38,19 @@ void book(vector<room> &rooms, User &guest){
 
 void checkIn(User& guest){
     int days;
-    cout << "!!-------------------------------------!!\n\n";
+    cout << "!!--------------Check In---------------!!\n\n";
     cout << "Enter number of days: ";
     cin >> days;
     guest.setAmount(days);
 }
+void checkOut(User &guest){
+    int days;
+    cout << "!!--------------Check Out--------------!!\n\n";
+    cout << "Enter number of days stayed: ";
+    cin >> days;
+    guest.setAmount(days); // overwrite bill cost if user under/overstayed visit.
+}
+
 //print all available rooms
 void avaialbleRooms(vector<room> &rooms){
     vector<room> availableRooms;
@@ -138,6 +148,37 @@ void feedback(){
     feedbackList.push_back(feedback);
 }
 
+vector<int> tables[10];
+void booktable(int table_number) {tables[table_number - 1].push_back(table_number);}
+bool available(int table_number){
+	if (tables[table_number - 1].empty()) {return true;}
+	else {return false;}
+}
+
+void tableBooking(){
+	cout << "Enter the table number you want to book from 1 to 10: ";
+	int table;
+	cin >> table;
+	if (table < 1 || table > 10) {
+		cout << "Invalid table number!" << endl;
+		return;
+	}
+	if (available(table)) {
+		cout << "Your booking is complete!" << endl;
+		booktable(table);
+	}
+	else {
+		cout << "Sorry, the table is already booked!" << endl;
+		cout << "Available tables: ";
+		for (int p = 0; p < 10; p++) {
+			if (available(p + 1)) {
+				cout << (p + 1) << " ";
+			}
+		}
+		cout << endl;
+	}
+}
+
 //generate tickets
 int vancover(){
 	int available_seats = 72;
@@ -207,14 +248,15 @@ void displayMenu(vector<room> &rooms, User &guest){
     while(!reset){
         cout << "!!----------Hotel Managment------------!!\n";
         cout << "|          1. Book a room               |\n"; // done    
-        cout << "|          2. Check in/out              |\n";    
+        cout << "|          2. Check in/out              |\n"; // done 
         cout << "|          3. Available rooms           |\n"; // done
-        cout << "|          4. Payment                   |\n";
+        cout << "|          4. Payment                   |\n"; // done
         cout << "|          5. Feedback                  |\n"; // done
-        cout << "|          6. Table reservation         |\n";
+        cout << "|          6. Table reservation         |\n"; // done
         cout << "|          7. Book Flight               |\n"; // done
         cout << "|          8. View current booking      |\n"; // done
-        cout << "|          9. Exit                      |\n"; // done
+        cout << "|          9. Order Food                |\n"; // 
+        cout << "|          10. Exit                     |\n"; // done
         cout << "!!-------------------------------------!!\n\n";
 
         int output;
@@ -227,25 +269,29 @@ void displayMenu(vector<room> &rooms, User &guest){
             break;
 
         case 2: // check into room and set checkout time
-            checkIn(guest);
+        int choice;
+            cout << "Check In (1)\nCheck Out (2)\n";
+            cin >> choice;
+            if(choice == 1) checkIn(guest);
+            else if(choice == 2) checkOut(guest);
+            else cout << "Invalid Choice.\n";
             break;
 
         case 3: // print  available rooms
             avaialbleRooms(rooms);
             break;
 
-        
-
-
         case 4:
-            printBill(guest, rooms);
+            payment(guest, rooms);
             break;
 
         case 5:
-            payment(guest, rooms);
+            feedback();
+            break;
 
         case 6: // book table
-
+            tableBooking();
+            break;
 
         case 7: // book flight tickets
             bookFlight();
@@ -255,7 +301,7 @@ void displayMenu(vector<room> &rooms, User &guest){
             viewBooking(guest);
             break;
 
-        case 9:
+        case 10:
             reset = true;
             break;
         default:
@@ -265,9 +311,7 @@ void displayMenu(vector<room> &rooms, User &guest){
      
 }
 
-
 int main(){
-    
     const int numOfRooms = 400;
     vector<room> rooms;//vector of all rooms
 
@@ -278,9 +322,9 @@ int main(){
 
     vector<User> users; // vector of all users
 
+    //premade users for speed
     User user1("Bradley", "BradleySchmidt04@gmail.com", "778-586-8196");
     User user2("John", "JohnDoe@gmail.com", "778-420-6969");
-
     users.push_back(user1);
     users.push_back(user2);
 

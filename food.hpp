@@ -6,17 +6,9 @@ using namespace std;
 
 class MenuItem {
 public:
-    MenuItem(const string& name, double price)
-        : name_(name), price_(price)
-    {}
-
-    const string& getName() const {
-        return name_;
-    }
-
-    double getPrice() const {
-        return price_;
-    }
+    MenuItem(const string& name, double price): name_(name), price_(price){}
+    const string& getName() const {return name_;}
+    double getPrice() const {return price_;}
 
 private:
     string name_;

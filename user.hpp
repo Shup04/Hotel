@@ -39,8 +39,8 @@ public:
     }
 
     void setAmount(int days){
-    this->days = days;//set days just incase user leaves early
-
+        this->days = days;//set days just incase user leaves early
+        amount = 0;
         // total room cost
         for(const auto& room : roomsOwned){
             if(room.getRoomType() == "Standard Room"){

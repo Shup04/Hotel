@@ -1,6 +1,9 @@
 #include<iostream>
+#include"user.hpp"
 #include"room.hpp"
 #include<vector>
+#include<algorithm>
+
 using namespace std;
 
 //book rooms
@@ -17,8 +20,8 @@ void book(vector<room> &rooms, User &guest){
         cin >> roomNum;
         room room = rooms[roomNum-1];
         
-        if(room.getStatus() == "Ready"){
-            rooms[i].setRoomOwner(guest);
+        if((room.getStatus() == "Ready")){
+            guest.addRoom(rooms[i]);
             rooms[i].setOccupied(true);
             cout << "Room #" << roomNum << " Booked.\n";
         }
@@ -26,6 +29,7 @@ void book(vector<room> &rooms, User &guest){
             i--;
             cout << "Room #" << roomNum << " not ready, please enter another room.\n";
         } 
+        rooms;
     }
     cout << "!!-------------------------------------!!\n\n";
 }
@@ -60,14 +64,20 @@ void avaialbleRooms(vector<room> &rooms){
     cout << "!!-------------------------------------!!\n\n";
 }
 
-void printBill(User &guest){
+void printBill(User &guest, vector<room> &rooms){
     cout << "Guest name: " << guest.getName() << endl;
-    cout <<"Room type: " << roomType << endl;
-    cout << "Room number: " << roomNumber << endl;
-    cout << "Amount: $" << amount << endl << endl;
+
+    //print room num and room type for each room the user owns.
+    for(const auto& room : guest.getRoomsOwned()){
+        cout << "Room Number: #" << room.getRoomNumber();
+        cout << ", Room type: " << room.getRoomType() << endl;
+    }
+
+    //cout << "Amount: $" << amount << endl << endl;
 }
+        
 void payment(){
-    printBill();
+   // printBill();
     int opt;
     string digits, expDate, cvv;
     bool isValid = false;
@@ -172,18 +182,14 @@ void bookFlight(){
     cout << "!!-------------------------------------!!\n\n";
 }
 
-void viewBooking(vector<room> &rooms, User &guest){
-    for(const auto& room : rooms){
-        cout << "!!-------------------------------------!!\n\n";
-        cout << " Your bookings:\n";
-        // find what rooms the user owns and execute
-        cout << room.getRoomOwner().getName() << endl;
-        cout << guest.getName() << endl;
-        if(room.getRoomOwner().getName() == guest.getName()){
-            cout << "Room #" << room.getRoomNumber() << endl;
-        }
+void viewBooking(User &guest){
+    cout << "!!-------------------------------------!!\n\n";
+    cout << " Your bookings:\n";
+    for(const auto& room : guest.getRoomsOwned()){
+        cout << "Room #" << room.getRoomNumber() << endl;
     }
-    rooms;
+    cout << "!!-------------------------------------!!\n\n";
+
 }
 
 void displayMenu(vector<room> &rooms, User &guest){
@@ -223,12 +229,15 @@ void displayMenu(vector<room> &rooms, User &guest){
         case 6: // book table
 
 
+        case 4:
+            printBill(guest, rooms);
+
         case 7: // book flight tickets
             bookFlight();
             break;
 
         case 8:
-            viewBooking(rooms, guest);
+            viewBooking(guest);
             break;
 
         case 9:

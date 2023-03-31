@@ -23,8 +23,8 @@ void book(vector<room> &rooms, User &guest){
         room room = rooms[roomNum-1];
         
         if((room.getStatus() == "Ready")){
-            guest.addRoom(rooms[i]);
-            rooms[i].setOccupied(true);
+            guest.addRoom(rooms[roomNum-1]);
+            rooms[roomNum-1].setOccupied(true);
             cout << "Room #" << roomNum << " Booked.\n";
         }
         else if(room.getStatus() == "Not Ready"){
@@ -146,6 +146,7 @@ void feedback(){
     cout << "What is your feedback: ";
     cin >> feedback;
     feedbackList.push_back(feedback);
+    cout << "Feedback is appreciated.\n";
 }
 
 vector<int> tables[10];
@@ -250,6 +251,44 @@ void viewBooking(User &guest){
     cout << "!!-------------------------------------!!\n\n";
 }
 
+void orderFood(){
+    int count;
+    string item;
+
+    //create menu items that users can order.
+    MenuItem burger("Burger", 8.99);
+    MenuItem pizza("Pizza", 10.99);
+    MenuItem fries("Fries", 2.99);
+    MenuItem coke("Coke", 1.99);
+    MenuItem beer("Beer", 4.99);
+    TableOrder table;
+
+    cout << "How many items would you like to order: ";
+    cin >> count;
+    int cost = 0;
+    vector<string> items;
+
+    for(int i=0; i<count; i++){
+        
+        cout << "Enter food name: ";
+        cin >> item;
+        
+        if(item == "burger") {table.takeOrder(Order(burger, 1));cost += 9;items.push_back(item);}
+        else if(item == "pizza") {table.takeOrder(Order(pizza, 1));cost += 12;items.push_back(item);}
+        else if(item == "fries") {table.takeOrder(Order(fries, 1));cost += 7;items.push_back(item);}
+        else if(item == "coke") {table.takeOrder(Order(coke, 1));cost += 4;items.push_back(item);}
+        else if(item == "beer") {table.takeOrder(Order(beer, 1));cost += 7;items.push_back(item);}
+        else {cout << "Item not available.\n";i--;}
+    }
+    cout << "!!---------------Food Bill-------------!!\n\n";
+    for(int i=0; i<items.size(); i++){
+        cout << "Item #" << i+1 << ": " << items[i] << endl;
+    }
+    cout << "Total Cost: $" << cost << endl;
+    cout << "!!-------------------------------------!!\n\n";
+    
+}
+
 void displayMenu(vector<room> &rooms, User &guest){
 
     bool reset = false;
@@ -264,7 +303,7 @@ void displayMenu(vector<room> &rooms, User &guest){
         cout << "|          6. Table reservation         |\n"; // done
         cout << "|          7. Book Flight               |\n"; // done
         cout << "|          8. View current booking      |\n"; // done
-        cout << "|          9. Order Food                |\n"; // 
+        cout << "|          9. Order Food                |\n"; // done
         cout << "|          10. Exit                     |\n"; // done
         cout << "|          11. Emergency Alert!!        |\n"; // done
         cout << "!!-------------------------------------!!\n\n";
@@ -311,8 +350,9 @@ void displayMenu(vector<room> &rooms, User &guest){
             viewBooking(guest);
             break;
 
-        case 9:
-            
+        case 9://order food
+            orderFood();
+            break;
 
         case 10:
             reset = true;
@@ -335,10 +375,6 @@ void displayMenu(vector<room> &rooms, User &guest){
     }
 }
 
-void displayAdminMenu(User &admin){
-
-}
-
 int main(){
     const int numOfRooms = 400;
     vector<room> rooms;//vector of all rooms
@@ -358,23 +394,16 @@ int main(){
     }
 
     vector<User> users; // vector of all users
-    vector<User> admins; // admin vector
 
     //premade users for speed
     User user1("Bradley", "BradleySchmidt04@gmail.com", "778-586-8196");
     User user2("John", "Johndoe@gmail.com", "123-456-7890");
     users.push_back(user1);
-    admins.push_back(user2);
+    users.push_back(user2);
 
     rooms.at(5).setIsDirty(true);
 
-    //create menu items that users can order.
-    MenuItem burger("Burger", 8.99);
-    MenuItem pizza("Pizza", 10.99);
-    MenuItem fries("Fries", 2.99);
-    MenuItem coke("Coke", 1.99);
-    MenuItem beer("Beer", 4.99);
-    TableOrder table;
+    
 
     while(true){
         string name;
@@ -396,7 +425,8 @@ int main(){
             cin >> email;
             cout << "Enter phone: ";
             cin >> phone;
-            guest = User(name, email, phone);
+            User user(name, email, phone);
+            users.push_back(user);
         }
         else if(userFound){
             displayMenu(rooms, guest);

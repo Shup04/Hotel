@@ -1,21 +1,20 @@
 /*
 BILLING AND PAYMENT MANAGEMENT SYSTEM
-*/
+
 #ifndef BILL_H
 #define BILL_H
 
 #include <iostream>
 #include <string>
 #include <map>
-#include "user.hpp"
+//#include "user.hpp"
+
 using namespace std;
 
-class Bill: User{
+class Bill{
 private:
-	string guestName;
-	string roomType;
-	int roomNumber;
 	double amount;
+
     User guest;
 		
 public:
@@ -27,22 +26,23 @@ public:
     }
 
     //roomType needs to include "N/A" within room class
-	Bill(string &guestName, string &roomType, int &roomNumber, double &amount){
-        this-> guestName = guestName;
-        this-> roomType = roomType;
-        this-> roomNumber = roomNumber;
+	Bill(User &guest, double &amount){
+        this->guest = guest;
         this-> amount = amount;
     }
 
+    /* commented cuz name and room stuff is under user and rooms owned already :)
     void setGuestName(string &guestName) {this-> guestName = guestName;}
     void setRoomType(string &roomType) {this->roomType = roomType;}
     void setRoomNumber(int &roomNumber) {this->roomNumber = roomNumber;}
-    void setAmount(double &amount) {this-> amount = amount;}
-        
+    */
+
+    /*
     string getGuestName() {return guestName;}
     string getRoomType() {return roomType;}
     int getRoomNumber() {return roomNumber;} 
-    double getAmount() {return amount;}
+    
+   
 };
 
 #endif

@@ -1,9 +1,9 @@
 #include<iostream>
 #include"user.hpp"
 #include"room.hpp"
+#include"bill.hpp"
 #include<vector>
 #include<algorithm>
-
 using namespace std;
 
 //book rooms
@@ -34,6 +34,13 @@ void book(vector<room> &rooms, User &guest){
     cout << "!!-------------------------------------!!\n\n";
 }
 
+void checkIn(User& guest){
+    int days;
+    cout << "!!-------------------------------------!!\n\n";
+    cout << "Enter number of days: ";
+    cin >> days;
+    guest.setAmount(days);
+}
 //print all available rooms
 void avaialbleRooms(vector<room> &rooms){
     vector<room> availableRooms;
@@ -65,6 +72,7 @@ void avaialbleRooms(vector<room> &rooms){
 }
 
 void printBill(User &guest, vector<room> &rooms){
+    cout << "!!-------------------Bill--------------!!\n\n";
     cout << "Guest name: " << guest.getName() << endl;
 
     //print room num and room type for each room the user owns.
@@ -72,12 +80,12 @@ void printBill(User &guest, vector<room> &rooms){
         cout << "Room Number: #" << room.getRoomNumber();
         cout << ", Room type: " << room.getRoomType() << endl;
     }
-
-    //cout << "Amount: $" << amount << endl << endl;
+    cout << "Amount: $" << guest.getAmount() << endl << endl;
+    cout << "!!-------------------------------------!!\n\n";
 }
         
-void payment(){
-   // printBill();
+void payment(User &guest, vector<room> &rooms){
+    printBill(guest, rooms);
     int opt;
     string digits, expDate, cvv;
     bool isValid = false;
@@ -205,7 +213,7 @@ void displayMenu(vector<room> &rooms, User &guest){
         cout << "|          5. Feedback                  |\n"; // done
         cout << "|          6. Table reservation         |\n";
         cout << "|          7. Book Flight               |\n"; // done
-        cout << "|          8. View current booking      |\n";
+        cout << "|          8. View current booking      |\n"; // done
         cout << "|          9. Exit                      |\n"; // done
         cout << "!!-------------------------------------!!\n\n";
 
@@ -219,24 +227,31 @@ void displayMenu(vector<room> &rooms, User &guest){
             break;
 
         case 2: // check into room and set checkout time
-            cout << " check in/out " << endl;
+            checkIn(guest);
             break;
 
         case 3: // print  available rooms
             avaialbleRooms(rooms);
             break;
 
-        case 6: // book table
+        
 
 
         case 4:
             printBill(guest, rooms);
+            break;
+
+        case 5:
+            payment(guest, rooms);
+
+        case 6: // book table
+
 
         case 7: // book flight tickets
             bookFlight();
             break;
 
-        case 8:
+        case 8: // print booking info
             viewBooking(guest);
             break;
 

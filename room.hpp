@@ -1,9 +1,11 @@
+#ifndef ROOM_HPP
+#define ROOM_HPP
+
 using namespace std;
 #include<string>
 #include<map>
 #include<tuple>
 #include<iomanip>
-#include"user.hpp"
 
 class room{
     private:
@@ -13,11 +15,11 @@ class room{
         bool occupied, isDirty, amenitiesStocked;
         string checkInDate, checkOutDate, status;
 
-        User roomOwner;
+        //User roomOwner;
 
         
         //map each room type to capacities, bettypes ecte
-        const std::map<string, std::tuple<int, int, string>> roomPropertes = {
+        std::map<string, std::tuple<int, int, string>> roomPropertes = {
 
             //room type -> capacity, bednumber, bedsize
             {"Standard Room", {2, 1, "double"}},
@@ -53,14 +55,14 @@ class room{
         void setRoomType(string roomType) {this->roomType = roomType;}
         void setOccupied(bool occupied) {this->occupied = occupied;}
         void setIsDirty(bool isDirty) {this->isDirty = isDirty;}
-        void setRoomOwner(User roomOwner) {this->roomOwner = roomOwner;}
+        //void setRoomOwner(User roomOwner) {this->roomOwner = roomOwner;}
         
         int getRoomNumber() const {return roomNumber;}
         string getRoomType() const {return roomType;}
         bool getOccupied() const {return occupied;}
         bool getIsDirty() const {return isDirty;}
         bool getAmenitiesStocked() const {return amenitiesStocked;}
-        User getRoomOwner() const {return roomOwner;}
+        //User getRoomOwner() const {return roomOwner;}
 
         string getCheckInDate() const { return checkInDate; }
         string getCheckOutDate() const { return checkOutDate; }
@@ -104,3 +106,4 @@ class room{
 
         }
 };
+#endif

@@ -34,7 +34,7 @@ private:
     int quantity_;
 };
 
-class Table {
+class TableOrder {
 public:
     void takeOrder(const Order& order) {
         orders_.push_back(order);
@@ -76,7 +76,7 @@ public:
         
     }
 };
-
+/*
 int main() {
 
     MenuItem burger("Burger", 8.99);
@@ -100,3 +100,4 @@ int main() {
 
     return 0;
 }
+*/

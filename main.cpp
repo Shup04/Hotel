@@ -237,8 +237,17 @@ void viewBooking(User &guest){
     for(const auto& room : guest.getRoomsOwned()){
         cout << "Room #" << room.getRoomNumber() << endl;
     }
+    int choice;
+    cout << "Would you like to edit the booking?\n";
+    cout << "Yes (1) | No (2)\n";
+    cin >> choice;
+    if(choice == 1){
+        int roomToRemove;
+        cout << "What room would you like to remove?\n";
+        cin >> roomToRemove;
+        guest.getRoomsOwned().pop_back();
+    }
     cout << "!!-------------------------------------!!\n\n";
-
 }
 
 void displayMenu(vector<room> &rooms, User &guest){
@@ -257,6 +266,7 @@ void displayMenu(vector<room> &rooms, User &guest){
         cout << "|          8. View current booking      |\n"; // done
         cout << "|          9. Order Food                |\n"; // 
         cout << "|          10. Exit                     |\n"; // done
+        cout << "|          11. Emergency Alert!!        |\n"; // done
         cout << "!!-------------------------------------!!\n\n";
 
         int output;
@@ -301,14 +311,32 @@ void displayMenu(vector<room> &rooms, User &guest){
             viewBooking(guest);
             break;
 
+        case 9:
+            
+
         case 10:
             reset = true;
             break;
+        
+        case 11:
+            cout << "!!-------------------------------------!!\n";
+            cout << "!!                                     !!\n";
+            cout << "!!           Emergency Alert!!         !!\n";
+            cout << "!!           Emergency Alert!!         !!\n";
+            cout << "!!           Emergency Alert!!         !!\n";
+            cout << "!!           Emergency Alert!!         !!\n";
+            cout << "!!           Emergency Alert!!         !!\n";
+            cout << "!!                                     !!\n";
+            cout << "!!-------------------------------------!!\n\n";
+
         default:
             break;
         }
     }
-     
+}
+
+void displayAdminMenu(User &admin){
+
 }
 
 int main(){
@@ -316,19 +344,37 @@ int main(){
     vector<room> rooms;//vector of all rooms
 
     //store all rooms
-    for(int i=0; i<numOfRooms; i++){
+    for(int i=0; i<100; i++){
         rooms.push_back(room(i+1, "Standard Room", false, false, true));
+    }
+    for(int i=100; i<200; i++){
+        rooms.push_back(room(i+1, "Deluxe Suite", false, false, true));
+    }
+    for(int i=200; i<300; i++){
+        rooms.push_back(room(i+1, "Executive Suite", false, false, true));
+    }
+    for(int i=0; i<100; i++){
+        rooms.push_back(room(i+1, "Penthouse", false, false, true));
     }
 
     vector<User> users; // vector of all users
+    vector<User> admins; // admin vector
 
     //premade users for speed
     User user1("Bradley", "BradleySchmidt04@gmail.com", "778-586-8196");
-    User user2("John", "JohnDoe@gmail.com", "778-420-6969");
+    User user2("John", "Johndoe@gmail.com", "123-456-7890");
     users.push_back(user1);
-    users.push_back(user2);
+    admins.push_back(user2);
 
     rooms.at(5).setIsDirty(true);
+
+    //create menu items that users can order.
+    MenuItem burger("Burger", 8.99);
+    MenuItem pizza("Pizza", 10.99);
+    MenuItem fries("Fries", 2.99);
+    MenuItem coke("Coke", 1.99);
+    MenuItem beer("Beer", 4.99);
+    TableOrder table;
 
     while(true){
         string name;
@@ -352,8 +398,8 @@ int main(){
             cin >> phone;
             guest = User(name, email, phone);
         }
-
-        displayMenu(rooms, guest);
+        else if(userFound){
+            displayMenu(rooms, guest);
+        }
     }
-    
 }
